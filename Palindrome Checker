@@ -1,0 +1,11 @@
+function palindrome(str) {
+  let b = (str.replace(/[^a-z0-9]/gi, '')).toLowerCase();
+  let strArr = b.split('');
+  let stringLength = b.length;
+  for(let i = 0; i < stringLength/2; i++){
+    if(strArr[i] != strArr[stringLength-1-i]){
+      return false;
+    }
+  }
+  return true;
+}
