@@ -1,0 +1,109 @@
+function convertToRoman(num){
+  let romanNum ='';
+  
+  if (num <= 10){
+
+    romanNum = convertTenthRoman(num);
+
+  }else if(num <= 100){
+
+    romanNum = convertHundredRoman(num/10) + convertTenthRoman(num % 10);
+
+  }else if(num <= 1000){
+    
+    romanNum = convertThousandRoman(num/100) + convertHundredRoman((num%100)/10) + convertTenthRoman(num % 10);
+
+  }else if (num > 1000){
+    
+    romanNum = 'M'.repeat(num/1000) + convertThousandRoman((num%1000)/100) + convertHundredRoman(((num-1000)%100)/10) + convertTenthRoman((num-1000) % 10);
+    
+  }
+  return romanNum;
+}
+
+function convertTenthRoman(num){
+  let forOne = 'I';
+  let forFive= 'V';
+  let forTen = 'X';
+  let romanNum ='';
+
+  for (let i = 1; i <= num; i++) {
+    romanNum = romanNum + forOne;
+    if (i == 4) {
+      romanNum = forOne + forFive;
+    }
+
+    if (i == 5) {
+      romanNum = forFive;
+    }
+
+    if (i == 9) {
+      romanNum = forOne + forTen;
+    }
+
+    if (i == 10) {
+      romanNum = forTen;
+    }
+  }
+  return romanNum;
+}
+
+function convertHundredRoman(num){
+
+  let forTen = 'X';
+  let forFifty = 'L';
+  let forHundred = 'C';
+  let romanNum ='';
+
+  for (let i = 1; i <= num; i++) {
+    romanNum = romanNum + forTen;
+    if(i == 4){
+      romanNum = forTen + forFifty;
+    }
+
+    if(i == 5){
+      romanNum = forFifty;
+    }
+
+    if(i == 9){
+      romanNum = forTen + forHundred;
+    }
+
+    if(i == 10){
+      romanNum = forHundred;
+    }
+
+  }
+  return romanNum;
+}
+
+function convertThousandRoman(num){
+
+  let forHundred = 'C';
+  let forFiveHundred = 'D';
+  let forThousand = 'M';
+  let romanNum ='';
+
+  for (let i = 1; i <= num; i++) {
+    romanNum = romanNum + forHundred;
+    if(i == 4){
+      romanNum = forHundred + forFiveHundred;
+    }
+
+    if(i == 5){
+      romanNum = forFiveHundred;
+    }
+
+    if(i == 9){
+      romanNum = forHundred + forThousand;
+    }
+
+    if(i == 10){
+      romanNum = forThousand;
+    }
+
+  }
+  return romanNum;
+}
+
+convertToRoman(36);
