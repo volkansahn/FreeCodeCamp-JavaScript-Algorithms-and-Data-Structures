@@ -1,0 +1,53 @@
+function checkCashRegister(price, cash, cid) {
+  let change;
+  let cashSum = 0;
+  let changeReturn = {};
+  let moneyCurrency = [100,20,10,5,1,0.25,0.1,0.05,0.01];
+  let moneyNames = ["ONE HUNDRED","TWENTY","TEN","FIVE","ONE","QUARTER","DIME","NICKEL","PENNY"];
+  let moneyArr = {};
+  let cidDict = {};
+
+  for (let i = 0; i < cid.length; i++){
+    cashSum = Math.round((cashSum + cid[i][1])*100) /100;
+    let name = cid[i][0];
+    let value = cid[i][1];
+    cidDict[name] = value;
+  }
+
+  console.log('cashSum : ' + cashSum);
+  
+  change = cash-price;
+  console.log('change:' + change);
+  
+  if( change == cashSum){
+
+    changeReturn['status'] = "CLOSED";
+    changeReturn['change'] = cid;
+    console.log(changeReturn);
+
+  }
+
+  for(let i = 0; i < moneyCurrency.length; i++){
+    if(Math.floor(change / moneyCurrency[i]) > 1){
+      moneyArr[moneyNames[i]] = Math.floor((change / moneyCurrency[i])) * moneyCurrency[i];
+      change = (change % moneyCurrency[i]);
+    }
+  }
+  console.log(moneyArr);
+  console.log('cid: ' + cid);
+  for (let j = 0; j < moneyNames.length; j++) {
+    if (moneyArr[moneyNames[j]] != 0 && moneyArr[moneyNames[j]] != undefined) {
+      let iterNum = 0;
+      let remainder = moneyArr[moneyNames[j]] - cidDict[moneyNames[j]];
+      console.log('rem: ' + remainder);
+      console.log('dict: '+ cidDict[moneyNames[j]]);
+      console.log('rem: ' + remainder);
+      while(remainder != 0 || iterNum != moneyNames.length){
+        remainder = remainder - (moneyArr[moneyNames[iterNum]] - cidDict[moneyNames[iterNum]]);
+      }
+      
+    }
+
+  }
+  return change;
+}
