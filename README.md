@@ -1,4 +1,4 @@
-![image](https://github.com/volkansahn/FreeCodeCamp-JavaScript-Algorithms-and-Data-Structures/assets/20855032/3724f268-23df-41b5-ac30-d1a3ba8e4ab1)# FreeCodeCamp-JavaScript-Algorithms-and-Data-Structures
+# FreeCodeCamp-JavaScript-Algorithms-and-Data-Structures
 I have managed to finished FreeCodeCamp JavaScript Algorithms and Data Structures course. 
 
 This repo includes some of the algorithm solutions of mine. I tried to find the most efficient way to solve the problem. But I am sure there is more efficient way to solve for each problem.
