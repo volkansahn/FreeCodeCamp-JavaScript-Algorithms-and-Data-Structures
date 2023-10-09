@@ -1,0 +1,119 @@
+function telephoneCheck(str) {
+
+  let strArr = str.split('');
+  let count = str.replace(/[^0-9]/g, "").length;
+
+  let regEx = new RegExp("[0-9]");
+  let specialCharRegEx = /[!@#$^&%*+=[]\/{}|:<>?,.]/;
+  let digitIndexes = [];
+  let trueCount = true;
+  
+  if (count == 10 || count == 11) {
+    if (count == 11 && ((strArr[0] == '(' && strArr[1] == 1) || strArr[0] == 1)) {
+      if (strArr[0] == '(') {
+        if (strArr[2] == ')' && strArr[1] == 1) {
+          let tempStrArr = strArr.slice(3);
+          trueCount = trueCount & testStr(tempStrArr,11);
+          return trueCount;
+        } else {
+          return false;
+        }
+      } else if (strArr[0] == 1) {
+        strArr.shift();
+        trueCount = trueCount && testStr(strArr,11);
+                  return trueCount;
+
+      }
+    } else if (count == 10) {
+      return testStr(strArr,10);
+    } else {
+      return false;
+    }
+
+  } else {
+    return false;
+  }
+}
+
+function testGroup(str) {
+  for (let i = 0; i < str.length - 1; i++) {
+    if (str[i + 1] - str[i] != 1) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function testStr(strArr, numCount){
+  console.log(strArr)
+  let regEx = new RegExp("[0-9]");
+  let specialCharRegEx = /[!@#$^&%*+=[]\/{}|:<>?,.]/;
+  let digitIndexes = [];
+  let trueCount = true;
+
+  for (let i = 0; i < strArr.length; i++) {
+    if (regEx.test(strArr[i])) {
+      digitIndexes.push(i);
+    }
+  }
+  console.log(digitIndexes);
+  let firstThree = digitIndexes.slice(0, 3);
+  if (testGroup(firstThree)) {
+    if(numCount == 10){
+      if (firstThree[0] == 1 && strArr[0] != '(' ) {
+        return false;
+      } else if (firstThree[0] == 1 && strArr[0] == '(' && strArr[4] != ')') {
+        return false;
+      } else if (firstThree[0] > 1) {
+        return false;
+      } else if (firstThree[0] == 0 && strArr[firstThree[2] + 1] == ')') {
+        return false;
+      } else {
+        trueCount = trueCount && true;
+      }
+    }else if(numCount == 11){
+      if (!((firstThree[0] == 1 || firstThree[0] == 2) && (strArr[0] == '(' ||strArr[0] == '-' || strArr[0] == ' '))) {
+        return false;
+      } else if (firstThree[0] == 1 && strArr[0] == '(' && strArr[4] != ')') {
+        return false;
+      } else if (firstThree[0] > 1 && strArr[0] == ' ' && strArr[1] != '(') {
+        return false;
+      } else {
+        trueCount = trueCount && true;
+      }
+    }
+    
+  }else{
+    return false;
+  }
+  let secondThree = digitIndexes.slice(3, 6);
+  if (testGroup(secondThree)) {
+    if (strArr[secondThree[0] - 1] == '(' && strArr[secondThree[2] + 1] != ')') {
+      return false;
+    } else if (strArr[secondThree[0] - 1] == ')' && strArr[0] != '(') {      
+      return false;
+    } else if(specialCharRegEx.test(strArr[secondThree[0] - 1])){
+      return false;
+    } else {
+      trueCount = trueCount && true;
+    }
+  }else{
+    return false;
+  }
+  let lastFour = digitIndexes.slice(6, 10);
+  if (testGroup(lastFour)) {
+    if(!(lastFour[3] == strArr.length-1 && (strArr[lastFour[0]-1] == '-'|| regEx.test(strArr[lastFour[0]-1]) || strArr[lastFour[0]-1] == ' '))){
+      return false;
+    } else if(lastFour[3] == strArr.length-2 && strArr[lastFour[3]+1] != ')'){
+      return false;
+    } else if(lastFour[3] == strArr.length-2 && strArr[lastFour[3]+1] == ')' && strArr[lastFour[0]-1] != '('){
+      return false;
+    } else {
+
+      trueCount = trueCount && true;
+    }
+  } else{
+    return false;
+  }
+  return trueCount;
+}
